@@ -81,6 +81,10 @@ function Signup() {
             </div>
 
             <button className={styles.button}>Sign Up</button>
+            <p className={styles.authPrompt}>
+              Already have an account?{" "}
+              <span className={styles.authLink}>Login</span>
+            </p>
           </form>
         </div>
       </div>

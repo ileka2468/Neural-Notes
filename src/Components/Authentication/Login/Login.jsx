@@ -63,7 +63,13 @@ function Login() {
               </div>
             </div>
 
+            <p>Forgot Password?</p>
+
             <button className={styles.button}>Login</button>
+            <p>
+              Don't have an account?{" "}
+              <span className={styles.authLink}>Sign Up</span>
+            </p>
           </form>
         </div>
       </div>
