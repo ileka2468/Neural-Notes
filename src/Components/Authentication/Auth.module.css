@@ -1,0 +1,96 @@
+.authHero {
+    background-image: url("https://ik.imagekit.io/smec/git/marissa-grootes-ck0i9Dnjtj0-unsplash.jpg?updatedAt=1702119191623");
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.authContainer {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #EBEBEB;
+}
+
+.container, .containerForm{
+    width: 50%;
+}
+
+.containerForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formWrapper{
+    width: 65%;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+}
+
+.form {
+    border: 1px solid rgba(211, 211, 211, 0.589);
+    border-radius: .4em;
+    margin-top: 3em;
+}
+
+
+.formGroup input {
+    border: none;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+    outline:none;
+}
+
+input[type=text], input[type=password], input[type=email]{
+    font-size: 14.5px;
+    background-color: #EBEBEB;
+}
+
+label {
+    color: rgba(128, 128, 128, 0.719);
+    font-size: 12px;
+}
+
+.hr{
+    border: none;
+  height: 1px;
+  background-color: rgba(211, 211, 211, 0.877);
+}
+
+
+.logo {
+    width: 10em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 1em;
+
+}
+
+.login_header{
+    font-weight: 200;
+    font-size: 2em;
+    
+}
+
+.login_header_span {
+    font-weight: 600;
+    color: #35185a;
+}
+
+.button {
+    margin-top: 2em;
+    background-color: #35185a;
+    border: none;
+    color: white;
+    padding: 1em;
+    width: 100%;
+    border-radius: .5em;
+}
