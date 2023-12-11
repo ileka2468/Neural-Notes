@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import styles from "../Auth.module.css";
-import logo from "../../../assets/logo.png";
 import { auth } from "../../../firebase";
+import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import Spinner from "react-bootstrap/Spinner";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
+import { useToast } from "../../../hooks/useToast";
+import "react-toastify/dist/ReactToastify.css";
+import { mapFirebaseErrorToMessage } from "../../../utils";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,32 +20,47 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loadingState, setLoadingState] = useState(false);
+  const triggerToast = useToast();
+  const passwordsMatch = password == confirmPassword;
+  console.log(passwordsMatch);
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
+    setLoadingState(true);
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      await signInWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      await updateProfile(user, { displayName: email });
+      if (passwordsMatch) {
+        await createUserWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password);
+        const user = auth.currentUser;
+        await updateProfile(user, { displayName: email });
+      } else {
+        triggerToast("Passwords do not match.", "error");
+      }
+      setLoadingState(false);
     } catch (err) {
-      console.log(err);
+      setLoadingState(false);
+      triggerToast(mapFirebaseErrorToMessage(err.code), "error");
+      console.log(err.code);
     }
   };
 
   return (
     <div className={styles.authContainer}>
-      <img className={styles.logo} src={logo} />
+      <img
+        className={styles.logo}
+        src="https://ik.imagekit.io/smec/git/logo.png?updatedAt=1702276876233"
+      />
       <div className={styles.containerForm}>
         <div className={styles.formWrapper}>
           <div>
             <h2 className={styles.login_header}>
-              Signup For
+              Sign Up For
               <b className={styles.login_header_span}> Neural Notes</b>
             </h2>
           </div>
 
-          <form onSubmit={(e) => handleLogin(e)}>
+          <form onSubmit={(e) => handleSignup(e)}>
             <div className={styles.form}>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
@@ -80,13 +103,19 @@ function Signup() {
               </div>
             </div>
 
-            <button className={styles.button}>Sign Up</button>
+            <button className={styles.button}>
+              {loadingState && <Spinner animation="border" size="sm" />}
+              Sign Up
+            </button>
             <p className={styles.authPrompt}>
               Already have an account?{" "}
-              <span className={styles.authLink}>Login</span>
+              <Link to="/auth/login" className={styles.routerLink}>
+                <span className={styles.authLink}>Login</span>
+              </Link>
             </p>
           </form>
         </div>
+        <ToastContainer />
       </div>
 
       <div className={styles.container}>
