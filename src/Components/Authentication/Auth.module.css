@@ -56,6 +56,12 @@ input[type=text], input[type=password], input[type=email]{
 label {
     color: rgba(128, 128, 128, 0.719);
     font-size: 12px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .hr{
@@ -107,7 +113,15 @@ label {
 }
 
 .forgotPassword {
-    margin-top: .2em; 
+    margin-top: .2em;
+    margin-left: .5em;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.forgotPassword:hover {
+    font-weight: bold;
+    color: #35185a;
 }
 
 .spinner {
@@ -116,6 +130,7 @@ label {
 
 .routerLink {
     text-decoration: none;
+    color: black;
 }
 
 .inputEyeContainer {
@@ -147,6 +162,12 @@ label {
     margin-left: 2.9em;
 }
 
+.GoogleButtonForm {
+    display: flex;
+    justify-content: center;
+}
+
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -154,6 +175,8 @@ input:-webkit-autofill:active {
     -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
     -webkit-transition-delay: 9999s;
 }
+
+
 
 
 /* Mobile Styles */

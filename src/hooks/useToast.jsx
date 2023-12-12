@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const toastTypes = {
@@ -27,7 +27,7 @@ function dispatchToast(message, type) {
 }
 
 export function useToast() {
-  const [errorState, setErrorState] = useState({
+  const [toastState, setToastState] = useState({
     isTriggered: false,
     toastType: null,
     toastMessage: null,
@@ -35,23 +35,23 @@ export function useToast() {
 
   useEffect(() => {
     if (
-      errorState.isTriggered &&
-      errorState.toastType &&
-      errorState.toastMessage
+      toastState.isTriggered &&
+      toastState.toastType &&
+      toastState.toastMessage
     ) {
-      dispatchToast(errorState.toastMessage, errorState.toastType);
+      dispatchToast(toastState.toastMessage, toastState.toastType);
 
       // Reset error state after displaying the toast
-      setErrorState({
+      setToastState({
         isTriggered: false,
         toastType: null,
         toastMessage: null,
       });
     }
-  }, [errorState]);
+  }, [toastState]);
 
   const triggerToast = (message, type) => {
-    setErrorState({
+    setToastState({
       isTriggered: true,
       toastType: type,
       toastMessage: message,

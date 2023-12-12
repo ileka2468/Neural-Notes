@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
-import styles from "./Authentication.module.css";
 import { Routes, Route, Outlet } from "react-router-dom";
+import PasswordReset from "../PasswordReset/PasswordReset";
 
 function Authentication() {
   return (
@@ -10,6 +10,7 @@ function Authentication() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
+        <Route path="reset-password" element={<PasswordReset />} />
       </Routes>
       <Outlet />
     </>

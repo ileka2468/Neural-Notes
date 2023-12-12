@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { auth } from "../../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { ToastContainer } from "react-toastify";
 import { useToast } from "../../../hooks/useToast";
 import Spinner from "react-bootstrap/Spinner";
@@ -8,7 +12,7 @@ import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../Auth.module.css";
 import { mapFirebaseErrorToMessage } from "../../../utils";
-
+import GoogleButton from "react-google-button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Login({ toggleSignUp }) {
@@ -33,12 +37,29 @@ function Login({ toggleSignUp }) {
     }
   };
 
+  const handleGoogleLogin = async (e) => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      console.log(user);
+      console.log(token);
+    } catch (err) {
+      triggerToast(mapFirebaseErrorToMessage(err.code, "error"));
+    }
+  };
+
   return (
     <div className={styles.authContainer}>
-      <img
-        className={styles.logo}
-        src="https://ik.imagekit.io/smec/git/logo.png?updatedAt=1702276876233"
-      />
+      <Link to="/home">
+        <img
+          className={styles.logo}
+          src="https://ik.imagekit.io/smec/git/logo.png?updatedAt=1702276876233"
+        />
+      </Link>
+
       <div className={styles.containerForm}>
         <div className={styles.formWrapper}>
           <div>
@@ -101,7 +122,9 @@ function Login({ toggleSignUp }) {
               </div>
             </div>
 
-            <p className={styles.forgotPassword}>Forgot Password?</p>
+            <Link to="/auth/reset-password" className={styles.routerLink}>
+              <p className={styles.forgotPassword}>Forgot Password?</p>
+            </Link>
 
             <button disabled={loadingState} className={styles.button}>
               {loadingState && <Spinner animation="border" size="sm" />}
@@ -116,6 +139,9 @@ function Login({ toggleSignUp }) {
               </Link>
             </p>
           </form>
+          <div className={styles.GoogleButtonForm}>
+            <GoogleButton onClick={(e) => handleGoogleLogin(e)} type="dark" />
+          </div>
         </div>
       </div>
 
