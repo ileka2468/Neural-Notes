@@ -102,7 +102,8 @@ const errorMessages = {
      "auth/missing-client-type": "Missing client type.",
      "auth/missing-recaptcha-version": "Missing Google reCAPTCHA version.",
      "auth/invalid-recaptcha-version": "Invalid Google reCAPTCHA version.",
-     "auth/invalid-req-type": "Invalid request type."
+     "auth/invalid-req-type": "Invalid request type.",
+     "auth/invalid-login-credentials": "The email or password was wrong, please try again."
 }
 
 export const mapFirebaseErrorToMessage = (errorCode) => {

@@ -1,4 +1,3 @@
-import { auth } from "../../../firebase";
 import authStyles from "../../Authentication/Auth.module.css";
 import styles from "./PasswordReset.module.css";
 import React from "react";

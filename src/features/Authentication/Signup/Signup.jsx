@@ -1,48 +1,54 @@
 import React, { useState } from "react";
 import styles from "../Auth.module.css";
-import { auth } from "../../../firebase";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Spinner from "react-bootstrap/Spinner";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
 import { useToast } from "../../../hooks/useToast";
-import "react-toastify/dist/ReactToastify.css";
 import { mapFirebaseErrorToMessage } from "../../../utils";
-
+import InputBorder from "../../../Components/InputBorder/InputBorder";
+import TextBox from "../../../Components/TextBox/TextBox";
+import { useAuth } from "reactfire";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
 
-function Signup() {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+
   const [loadingState, setLoadingState] = useState(false);
   const triggerToast = useToast();
   const passwordsMatch = password == confirmPassword;
-  console.log(passwordsMatch);
+  const auth = useAuth();
 
   const handleSignup = async (e) => {
-    setLoadingState(true);
     e.preventDefault();
-    try {
-      if (passwordsMatch) {
-        await createUserWithEmailAndPassword(auth, email, password);
-        await signInWithEmailAndPassword(auth, email, password);
-        const user = auth.currentUser;
-        await updateProfile(user, { displayName: email });
-      } else {
-        triggerToast("Passwords do not match.", "error");
-      }
+    setLoadingState(true);
+
+    if (!passwordsMatch) {
       setLoadingState(false);
-    } catch (err) {
-      setLoadingState(false);
-      triggerToast(mapFirebaseErrorToMessage(err.code), "error");
-      console.log(err.code);
+      return triggerToast("Passwords do not match.", "error");
     }
+
+    if (!fullName) {
+      setLoadingState(false);
+      return triggerToast("You did not supply your name.", "error");
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { displayName: fullName });
+    } catch (err) {
+      triggerToast(mapFirebaseErrorToMessage(err.code), "error");
+    }
+    setLoadingState(false);
   };
 
   return (
@@ -61,47 +67,50 @@ function Signup() {
           </div>
 
           <form onSubmit={(e) => handleSignup(e)}>
-            <div className={styles.form}>
-              <div className={styles.formGroup}>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  required={true}
-                />
-              </div>
+            <InputBorder>
+              <TextBox
+                data={{
+                  type: "text",
+                  placeholder: "John Doe",
+                  stateValueSetter: setFullName,
+                  stateValue: fullName,
+                  labelText: "Full Name",
+                  required: true,
+                }}
+              />
 
-              <hr className={styles.hr} />
+              <TextBox
+                data={{
+                  type: "email",
+                  placeholder: "email@example.com",
+                  stateValueSetter: setEmail,
+                  stateValue: email,
+                  labelText: "Email",
+                  required: true,
+                }}
+              />
+              <TextBox
+                data={{
+                  type: "password",
+                  placeholder: "Password",
+                  stateValueSetter: setPassword,
+                  stateValue: password,
+                  labelText: "Password",
+                  required: true,
+                }}
+              />
 
-              <div className={`${styles.formGroup}`}>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                  required={true}
-                />
-              </div>
-
-              <hr className={styles.hr} />
-
-              <div className={`${styles.formGroup}`}>
-                <label htmlFor="confirmPassword">Confirm password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  value={confirmPassword}
-                  required={true}
-                />
-              </div>
-            </div>
+              <TextBox
+                data={{
+                  type: "password",
+                  placeholder: "Password",
+                  stateValueSetter: setConfirmPassword,
+                  stateValue: confirmPassword,
+                  labelText: "Confirm password",
+                  required: true,
+                }}
+              />
+            </InputBorder>
 
             <button className={styles.button}>
               {loadingState && <Spinner animation="border" size="sm" />}
@@ -123,6 +132,6 @@ function Signup() {
       </div>
     </div>
   );
-}
+};
 
 export default Signup;

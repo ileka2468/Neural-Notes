@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { auth } from "../../../firebase";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -9,11 +8,13 @@ import { ToastContainer } from "react-toastify";
 import { useToast } from "../../../hooks/useToast";
 import Spinner from "react-bootstrap/Spinner";
 import { Link } from "react-router-dom";
+
 import "react-toastify/dist/ReactToastify.css";
 import styles from "../Auth.module.css";
 import { mapFirebaseErrorToMessage } from "../../../utils";
 import GoogleButton from "react-google-button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useAuth } from "reactfire";
 
 function Login({ toggleSignUp }) {
   const [email, setEmail] = useState("");
@@ -21,31 +22,26 @@ function Login({ toggleSignUp }) {
   const [loadingState, setLoadingState] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const triggerToast = useToast();
+  const auth = useAuth();
 
   const handleLogin = async (e) => {
     setLoadingState(true);
-    console.log(loadingState);
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      console.log(auth.currentUser.displayName);
       setLoadingState(false);
-      const user = auth.currentUser; // set a user in the redux store, then redirect to somewhere
     } catch (err) {
       setLoadingState(false);
       triggerToast(mapFirebaseErrorToMessage(err.code), "error");
-      console.log(err.code);
+      console.log(err);
     }
   };
 
   const handleGoogleLogin = async (e) => {
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      console.log(user);
-      console.log(token);
+      await signInWithPopup(auth, provider);
     } catch (err) {
       triggerToast(mapFirebaseErrorToMessage(err.code, "error"));
     }

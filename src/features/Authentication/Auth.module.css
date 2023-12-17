@@ -34,9 +34,9 @@
 }
 
 .form {
-    border: 1px solid rgba(211, 211, 211, 0.589);
+    border: 1px solid rgba(155, 155, 155, 0.317);
     border-radius: .4em;
-    margin-top: 3em;
+    margin-top: 2em;
 }
 
 
@@ -44,7 +44,7 @@
     border: none;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, .noInputBorder {
     outline:none;
 }
 
@@ -67,7 +67,7 @@ label {
 .hr{
     border: none;
     height: 1px;
-    background-color: rgb(205, 205, 205);
+    background-color: rgba(155, 155, 155, 0.649)
 }
 
 
@@ -176,6 +176,10 @@ input:-webkit-autofill:active {
     -webkit-transition-delay: 9999s;
 }
 
+.noInputBorder {
+    border: none;
+}
+
 
 
 
@@ -188,18 +192,21 @@ input:-webkit-autofill:active {
     }
     
     .formWrapper{
-       width: auto;
-       max-width: 90%;
+       width: 80%;
     }
 
     .containerForm{
-        width: auto;
+        width: 100%;
         margin-bottom: 2em;
         height: 60%;
     }
 
     .container{
         height: 40%;
+        width: 100%;
+    }
+
+    .form {
         width: 100%;
     }
 }
