@@ -34,9 +34,9 @@
 }
 
 .form {
-    border: 1px solid rgba(211, 211, 211, 0.589);
+    border: 1px solid rgba(155, 155, 155, 0.317);
     border-radius: .4em;
-    margin-top: 3em;
+    margin-top: 2em;
 }
 
 
@@ -44,7 +44,7 @@
     border: none;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, .noInputBorder {
     outline:none;
 }
 
@@ -56,12 +56,18 @@ input[type=text], input[type=password], input[type=email]{
 label {
     color: rgba(128, 128, 128, 0.719);
     font-size: 12px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .hr{
     border: none;
     height: 1px;
-    background-color: rgba(211, 211, 211, 0.877);
+    background-color: rgba(155, 155, 155, 0.649)
 }
 
 
@@ -106,6 +112,75 @@ label {
     cursor: pointer;
 }
 
+.forgotPassword {
+    margin-top: .2em;
+    margin-left: .5em;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.forgotPassword:hover {
+    font-weight: bold;
+    color: #35185a;
+}
+
+.spinner {
+    margin-left: .5em;
+}
+
+.routerLink {
+    text-decoration: none;
+    color: black;
+}
+
+.inputEyeContainer {
+    display: flex;
+    align-items: center;
+}
+
+.inputEyeContainer div {
+    display: flex;
+    text-align: center;
+    cursor: pointer;
+}
+
+.eye {
+    display: none;
+}
+
+.eyeContainer {
+  margin-top: 1.1em;
+}
+
+.labelPasswordGroup {
+    display: flex;
+    flex-direction: column;
+    margin-left: .5em;
+}
+
+.emailGroup {
+    margin-left: 2.9em;
+}
+
+.GoogleButtonForm {
+    display: flex;
+    justify-content: center;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}
+
+.noInputBorder {
+    border: none;
+}
+
+
 
 
 /* Mobile Styles */
@@ -117,18 +192,21 @@ label {
     }
     
     .formWrapper{
-       width: auto;
-       max-width: 90%;
+       width: 80%;
     }
 
     .containerForm{
-        width: auto;
+        width: 100%;
         margin-bottom: 2em;
         height: 60%;
     }
 
     .container{
         height: 40%;
+        width: 100%;
+    }
+
+    .form {
         width: 100%;
     }
 }
