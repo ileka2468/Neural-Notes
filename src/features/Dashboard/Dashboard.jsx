@@ -12,7 +12,7 @@ function Dashboard() {
   if (user) {
     return (
       <>
-        <div>Dashboard Protected route.</div>
+        <div>Dashboard Protected route for {user?.displayName}</div>
         <button onClick={async () => await auth.signOut()}> Sign Out</button>
       </>
     );

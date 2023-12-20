@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from "react";
-import Login from "../Login/Login";
-import Signup from "../Signup/Signup";
-import { Routes, Route, Outlet } from "react-router-dom";
-import PasswordReset from "../PasswordReset/PasswordReset";
-import ErrorPage from "../../../Components/Error/ErrorPage";
+import { Outlet } from "react-router-dom";
 import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
 
 function Authentication() {
-  const [status, isLoggedIn] = useRedirectIfLoggedIn("dashboard");
-  console.log(status, isLoggedIn);
+  const [redirectStatus, isLoggedIn] = useRedirectIfLoggedIn("dashboard");
+  const [isLoading, setLoading] = useState(true);
 
-  if (status === "loading") {
+  useEffect(() => {
+    if (redirectStatus === "success") {
+      setLoading(false);
+    }
+  }, [redirectStatus]);
+
+  if (isLoading) {
     return <div></div>;
-  } else {
-    return (
-      <>
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Signup />} />
-          <Route path="reset-password" element={<PasswordReset />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-        <Outlet />
-      </>
-    );
   }
+
+  return <Outlet />;
 }
 
 export default Authentication;
