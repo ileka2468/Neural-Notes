@@ -1,36 +1,28 @@
 import React from "react";
-import styles from "./Pricing.module.css";
+import styles from "./PricingCard.module.css";
+import Button from "../../Button/Button";
 
 const PricingCard = ({ dataObject }) => {
-  const {
-    subscription_name,
-    subscription_price,
-    button_text,
-    selectionState,
-    id,
-    setActive,
-    initialState,
-  } = dataObject;
+  const { subscription_name, subscription_price, button_text, features } =
+    dataObject;
+  console.log(button_text);
 
   return (
-    <div
-      className={
-        selectionState[id]
-          ? styles.PricingCardActive
-          : styles.PricingCardInactive
-      }
-      onMouseOver={() => {
-        setActive(id);
-      }}
-      onMouseLeave={() => setActive(initialState)}
-    >
+    <div className={styles.PricingCard}>
       <div className={styles.top_card}>
-        <h4>{subscription_name}</h4>
-        <h2>{subscription_price}</h2>
-        <button>{button_text}</button>
+        <h4 className={styles.subscription_name}>{subscription_name}</h4>
+        <h1 className={styles.price}>{subscription_price}</h1>
+        <Button>{button_text}</Button>
       </div>
 
-      <div className="bottom_card"></div>
+      <hr />
+      <ul>
+        {features.map((feature) => (
+          <li>{feature}</li>
+        ))}
+      </ul>
+
+      <div className={styles.bottom_card}></div>
     </div>
   );
 };

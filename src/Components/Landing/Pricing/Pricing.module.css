@@ -1,11 +1,3 @@
-.PricingCardActive {
-  display: inline-block;
-  margin: 1em;
-  background-color: green;
-}
-
-.PricingCardInactive {
-  display: inline-block;
-  margin: 1em;
-  background-color: red;
+.card_container {
+  display: flex;
 }

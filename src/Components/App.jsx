@@ -32,8 +32,8 @@ function App() {
                   <Route path="login" element={<Login />} />
                   <Route path="register" element={<Signup />} />
                   <Route path="reset-password" element={<PasswordReset />} />
-                  <Route path="dashboard" element={<Dashboard />} />
                 </Route>
+                <Route path="dashboard" element={<Dashboard />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </DatabaseProvider>
