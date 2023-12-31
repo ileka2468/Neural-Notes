@@ -2,22 +2,26 @@ import { Button } from "bootstrap";
 import React from "react";
 import { useAuth, useUser } from "reactfire";
 import { useRedirectIfNotLoggedIn } from "../../hooks/useRedirectIfNotLoggedIn";
+import LoadingSpinner from "../../Components/LoadingSpinner/LoadingSpinner";
 
 function Dashboard() {
-  const { data: user } = useUser();
+  const { status, data: user } = useUser();
   const auth = useAuth();
 
   useRedirectIfNotLoggedIn("auth/login");
 
-  if (user) {
-    return (
-      <>
-        <div>Dashboard Protected route for {user?.displayName}</div>
-        <button onClick={async () => await auth.signOut()}> Sign Out</button>
-      </>
-    );
-  } else {
-  }
+  return (
+    <>
+      {status === "success" && user ? (
+        <>
+          <div>Dashboard Protected route for {user?.displayName}</div>
+          <button onClick={async () => await auth.signOut()}> Sign Out</button>
+        </>
+      ) : (
+        <LoadingSpinner />
+      )}
+    </>
+  );
 }
 
 export default Dashboard;

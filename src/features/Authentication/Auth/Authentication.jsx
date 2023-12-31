@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
+import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 function Authentication() {
   const [redirectStatus, isLoggedIn] = useRedirectIfLoggedIn("dashboard");
@@ -13,7 +14,7 @@ function Authentication() {
   }, [redirectStatus]);
 
   if (isLoading) {
-    return <div></div>;
+    return <LoadingSpinner />;
   }
 
   return <Outlet />;

@@ -1,0 +1,13 @@
+@keyframes pulseAnimation {
+  0%,
+  100% {
+    stddeviation: 20 0;
+  }
+  50% {
+    stddeviation: 5 0;
+  }
+}
+
+#blur-effect {
+  animation: pulseAnimation 5s infinite;
+}

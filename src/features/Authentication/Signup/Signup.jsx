@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styles from "../Auth.module.css";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  createSearchParams,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Spinner from "react-bootstrap/Spinner";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,6 +31,7 @@ const Signup = () => {
   const triggerToast = useToast();
   const passwordsMatch = password == confirmPassword;
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -46,6 +52,7 @@ const Signup = () => {
       await signInWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, { displayName: fullName });
     } catch (err) {
+      console.error(err);
       triggerToast(mapFirebaseErrorToMessage(err.code), "error");
     }
     setLoadingState(false);

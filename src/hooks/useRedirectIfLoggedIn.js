@@ -10,8 +10,13 @@ export const useRedirectIfLoggedIn = (pathToRedirect) => {
 
      useEffect(() => {
           if (user) {
-               setIsLoggedIn(true)
-               navigateTo(`/${pathToRedirect}`)
+               setIsLoggedIn(true);
+               let potential_redirect = sessionStorage.getItem("subscription_redirect_price_id");
+               if (!potential_redirect) {
+                    navigateTo(`/${pathToRedirect}`);
+               } else {
+                    navigateTo(`/pricing`);
+               }
           } else {
                setIsLoggedIn(false);
           }

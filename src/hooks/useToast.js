@@ -8,12 +8,12 @@ const toastTypes = {
   warning: toast.warn,
 };
 
-function dispatchToast(message, type) {
+function dispatchToast(message, type, duration) {
   const toastFunc = toastTypes[type];
   if (toastFunc) {
     toastFunc(message, {
       position: "top-center",
-      autoClose: 3000,
+      autoClose: duration ? duration : 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -31,6 +31,7 @@ export function useToast() {
     isTriggered: false,
     toastType: null,
     toastMessage: null,
+    duration: null
   });
 
   useEffect(() => {
@@ -39,22 +40,24 @@ export function useToast() {
       toastState.toastType &&
       toastState.toastMessage
     ) {
-      dispatchToast(toastState.toastMessage, toastState.toastType);
+      dispatchToast(toastState.toastMessage, toastState.toastType, toastState.duration);
 
       // Reset error state after displaying the toast
       setToastState({
         isTriggered: false,
         toastType: null,
         toastMessage: null,
+        duration: null
       });
     }
   }, [toastState]);
 
-  const triggerToast = (message, type) => {
+  const triggerToast = (message, type, duration = null) => {
     setToastState({
       isTriggered: true,
       toastType: type,
       toastMessage: message,
+      duration: duration
     });
   };
 
